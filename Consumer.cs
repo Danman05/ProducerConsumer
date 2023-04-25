@@ -8,12 +8,6 @@ namespace ProducerConsumer
 {
     public class Consumer
     {
-
-
-        public Consumer()
-        {
-
-        }
         public void ConsumeArray(object callback)
         {
             //Stack
@@ -24,6 +18,7 @@ namespace ProducerConsumer
                 {
                     if (Monitor.TryEnter(Program.cookieArray))
                     {
+                        // Waits for cookies if the Index of array
                         if (Program.Index == 0)
                         {
                             Monitor.Wait(Program.cookieArray);
@@ -36,7 +31,6 @@ namespace ProducerConsumer
                             Program.cookieArray[Program.Index] = null;
                             Program.Index--;
 
-                            Monitor.Exit(Program.cookieArray);
                         }
 
                     }
@@ -44,6 +38,8 @@ namespace ProducerConsumer
                 }
                 finally
                 {
+                    if (Monitor.IsEntered(Program.cookieArray))
+                        Monitor.Exit(Program.cookieArray);
                     Thread.Sleep(200);
                 }
             }
@@ -68,12 +64,14 @@ namespace ProducerConsumer
                         {
                             Program.consumedQueueCookies.Add(Program.cookieQ.Dequeue());
                         }
-                        Monitor.Exit(Program.cookieQ);
                     }
 
                 }
                 finally
                 {
+                    if (Monitor.IsEntered(Program.cookieQ))
+                        Monitor.Exit(Program.cookieQ);
+
                     Thread.Sleep(200);
                 }
             }

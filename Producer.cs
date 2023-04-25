@@ -25,10 +25,10 @@ namespace ProducerConsumer
                 {
                     Monitor.Enter(Program.cookieArray);
                     Console.Clear();
-                    //TODO: Manager needed
+
+                    // Produces new cookies when the Index lenght of cookieArray is less than 3 
                     if (Program.Index < 3)
                     {
-
                         for (int i = Program.Index; i <= Program.cookieArray.Length - 1; i++)
                         {
                             Program.Index = i;
@@ -36,10 +36,7 @@ namespace ProducerConsumer
                             {
                                 producedArrayCookies++;
                                 Program.cookieArray[Program.Index] = new Cookie();
-
                             }
-
-
                         }
                         Monitor.PulseAll(Program.cookieArray);
                     }
